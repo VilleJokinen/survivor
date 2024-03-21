@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,8 +30,29 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        Move();
+    }
+
+    void Move()
+    {
         moveInput = controls.Player.Move.ReadValue<Vector2>();
         Vector2 movement = new Vector2(moveInput.x, moveInput.y) * moveSpeed * Time.fixedDeltaTime;
         body.MovePosition(body.position + movement);
+    }
+
+    private void Update()
+    {
+        Shoot();
+    }
+
+    void Shoot()
+    {
+        if (controls.Player.Shoot.triggered)
+        {
+            GameObject bullet = BulletPoolManager.Instance.GetBullet();
+            bullet.transform.position = gunTransform.position;
+            bullet.transform.rotation = gunTransform.rotation;
+
+        }
     }
 }

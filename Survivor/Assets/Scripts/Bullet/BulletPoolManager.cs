@@ -29,9 +29,19 @@ public class BulletPoolManager : MonoBehaviour
 
     public GameObject GetBullet()
     {
-        GameObject bullet = bulletPool.Dequeue();
-        bullet.SetActive(true);
-        return bullet;
+        if(bulletPool.Count > 0)
+        {
+            GameObject bullet = bulletPool.Dequeue();
+            bullet.SetActive(true);
+            return bullet;
+        }
+        else
+        {
+            GameObject newBullet = Instantiate(bulletPrefab);
+            newBullet.SetActive(true);
+            return newBullet;
+        }
+
     }
 
     public void ReturnBullet(GameObject bullet)
